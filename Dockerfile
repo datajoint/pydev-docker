@@ -5,9 +5,8 @@ RUN apt-get update \
     && apt-get install -y build-essential \
     && apt-get install -y gfortran \
     && apt-get install -y libblas-dev \
-    && apt-get install -y liblapack-dev \
-    && mkdir /dev
+    && apt-get install -y liblapack-dev
 ADD requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
-WORKDIR /dev
+WORKDIR /
 CMD ipython
