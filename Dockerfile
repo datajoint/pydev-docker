@@ -8,7 +8,6 @@ RUN apt-get update \
     && apt-get install -y libblas-dev \
     && apt-get install -y liblapack-dev \
     && apt-get install -y cython \
-    && apt-get install -y  libhdf5-dev \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD requirements.txt /requirements.txt
