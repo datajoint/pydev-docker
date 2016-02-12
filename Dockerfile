@@ -7,6 +7,7 @@ RUN apt-get update \
     && apt-get install -y gfortran \
     && apt-get install -y libblas-dev \
     && apt-get install -y liblapack-dev \
+    && apt-get install -y cython
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD requirements.txt /requirements.txt
