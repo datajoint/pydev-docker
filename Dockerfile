@@ -1,19 +1,33 @@
-FROM python:3.5
-
+FROM ubuntu:16.04
 MAINTAINER Edgar Y. Walker <edgar.walker@gmail.com>
 
-RUN apt-get update \
-    && apt-get install -y build-essential \
-    && apt-get install -y gfortran \
-    && apt-get install -y libblas-dev \
-    && apt-get install -y liblapack-dev \
-    && apt-get install -y cython \
-    && echo 'deb http://www.deb-multimedia.org jessie main non-free' >> /etc/apt/sources.list \
-    && apt-get update \
-    && apt-get install -y --force-yes deb-multimedia-keyring \
-    && apt-get update \
-    && apt-get install -y ffmpeg \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get update &&\
+    apt-get install -y build-essential \
+                       gfortran \
+                       vim \
+                       curl \
+                       wget \
+                       zip \
+                       zlib1g-dev \
+                       unzip \
+                       libfreetype6-dev \
+                       pkg-config \
+                       libblas-dev \
+                       liblapack-dev \
+                       python3-dev \
+                       python3-pip \
+                       python3-tk \
+                       python3-wheel \
+                       swig \
+                       cython &&\
+    rm /usr/bin/python &&\
+    ln -s /usr/bin/python3 /usr/bin/python &&\
+    ln -s /usr/bin/pip3 /usr/bin/pip &&\
+    pip install --upgrade pip &&\
+    apt-get clean &&\
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ENV LANG C.UTF-8
 
 ADD requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt \
