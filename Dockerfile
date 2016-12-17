@@ -20,9 +20,8 @@ RUN apt-get update &&\
                        python3-wheel \
                        swig \
                        cython &&\
-    rm /usr/bin/python &&\
-    ln -s /usr/bin/python3 /usr/bin/python &&\
-    ln -s /usr/bin/pip3 /usr/bin/pip &&\
+    ln -s /usr/bin/python3 /usr/local/bin/python &&\
+    ln -s /usr/bin/pip3 /usr/local/bin/pip &&\
     pip install --upgrade pip &&\
     apt-get clean &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
