@@ -1,7 +1,7 @@
-numpy==1.10.4
-matplotlib==2.0.0
-scipy==0.17.0
-pandas==0.17.1
-seaborn==0.7.0
-ipython==4.0.3
-theano==0.7.0
+numpy
+matplotlib
+scipy
+pandas
+seaborn
+ipython
+jupyter
