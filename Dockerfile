@@ -7,6 +7,7 @@ RUN apt-get update &&\
                        vim \
                        curl \
                        wget \
+                       git \
                        zip \
                        zlib1g-dev \
                        unzip \
