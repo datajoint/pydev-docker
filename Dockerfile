@@ -19,6 +19,8 @@ RUN apt-get update &&\
                        python3-tk \
                        python3-wheel \
                        swig \
+		       graphviz \
+                       graphviz-dev \
                        cython &&\
     ln -s /usr/bin/python3 /usr/local/bin/python &&\
     ln -s /usr/bin/pip3 /usr/local/bin/pip &&\
