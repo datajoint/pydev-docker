@@ -2,5 +2,5 @@ version: '2.4'
 
 services:
   dj:
-    image: raphaelguzman/pydev:3.7-ubuntu16.04
+    image: datajoint/pydev:python3.6
     command: jupyter notebook
