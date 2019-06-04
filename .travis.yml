@@ -1,0 +1,49 @@
+sudo: required
+services: 
+- docker
+
+alpine: &alpine
+      stage: Alpine
+      os: linux
+      language: shell
+      script:
+        - docker build --build-arg PY_VER=$PY_VER --build-arg ALPINE_VER=$ALPINE_VER -t datajoint/pydev:$PY_VER-alpine$ALPINE_VER alpine/.
+      after_success:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push datajoint/pydev:$PY_VER-alpine$ALPINE_VER
+
+ubuntu: &ubuntu
+      stage: Ubuntu
+      os: linux
+      language: shell
+      script:
+        - docker build --build-arg UBUNTU_VER=$UBUNTU_VER -t datajoint/pydev:python$PY_VER ubuntu/.
+      after_success:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push datajoint/pydev:python$PY_VER
+
+jobs:
+  include:
+    - <<: *alpine
+      env:
+      - PY_VER: 3.8-rc
+      - ALPINE_VER: 3.9
+    - <<: *alpine
+      env:
+      - PY_VER: 3.7
+      - ALPINE_VER: 3.9
+    - <<: *alpine
+      env:
+      - PY_VER: 3.6
+      - ALPINE_VER: 3.9
+    - <<: *alpine
+      env:
+      - PY_VER: 3.5
+      - ALPINE_VER: 3.9
+    - <<: *alpine
+      env:
+      - PY_VER: 3.4
+      - ALPINE_VER: 3.9
+    - <<: *ubuntu
+      env:
+      - UBUNTU_VER: 16.04
