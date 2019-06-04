@@ -1,4 +1,5 @@
-FROM ubuntu:16.04
+ARG  UBUNTU_VER=16.04
+FROM ubuntu:${UBUNTU_VER}
 MAINTAINER Edgar Y. Walker <edgar.walker@gmail.com>
 
 RUN apt-get update &&\

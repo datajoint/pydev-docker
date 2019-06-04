@@ -1,0 +1,12 @@
+version: '2.4'
+
+services:
+  dj:
+    image: raphaelguzman/pydev:3.7-alpine3.9
+    environment:
+      - DISPLAY
+    command: jupyter notebook
+    ports:
+      - "8888:8888"
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
