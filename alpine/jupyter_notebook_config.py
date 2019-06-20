@@ -1,5 +1,6 @@
 # Configuration file for ipython-notebook.
 from os import environ, remove
+from IPython.lib import passwd
 
 c = get_config()
 
@@ -11,7 +12,7 @@ c = get_config()
 # NotebookApp will inherit config from: BaseIPythonApplication, Application
 
 # The IPython password to use i.e. "datajoint".
-c.NotebookApp.password = u'sha1:06a636d59f35:83a05583e2737b24c070f5a16355486f9e1b8fb3'
+c.NotebookApp.password = passwd(getenv('JUPYTER_PASSWORD', 'datajoint')).encode("ascii")
 
 # Allow root access.
 c.NotebookApp.allow_root = True

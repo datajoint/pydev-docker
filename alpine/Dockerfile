@@ -1,9 +1,13 @@
 ARG  PY_VER=3.7
 ARG  ALPINE_VER=3.9
-FROM python:${PY_VER}-alpine${ALPINE_VER}
-LABEL maintainerName="Raphael Guzman" \
-      maintainerEmail="raphael.h.guzman@gmail.com" \
-      maintainerCompany="DataJoint"
+
+#Temp Image to create exec to allow UID/GID to be updated on boot
+FROM golang:alpine${ALPINE_VER} as go_tmp
+COPY ./startup.go /startup.go
+RUN cd / && go build startup.go
+
+#Base
+FROM python:${PY_VER}-alpine${ALPINE_VER} as py_build
 # min datajoint
 RUN \
   apk update && \
@@ -22,7 +26,7 @@ RUN \
   apk --no-cache --update-cache add --virtual build-mysql8-dependencies \
     openssl-dev libffi-dev
 
-# jupyter support
+# jupyter dependencies
 RUN \
   apk --no-cache --update-cache add --virtual build-jnb-dependencies \
     curl make && \
@@ -36,21 +40,28 @@ RUN \
   cd ../../ && \
   rm -rf min-package && \
   strip --strip-unneeded --strip-debug /usr/local/lib/*.a || true && \
-  strip --strip-unneeded --strip-debug /usr/local/lib/*.so* || true && \
-  pip install jupyter
+  strip --strip-unneeded --strip-debug /usr/local/lib/*.so* || true 
 
 # Prep git for source
 RUN \
   apk --no-cache --update-cache add git
 
 # datajoint admin (dja) mapped to docker host user
-RUN export uid=1000 gid=1000 && \
+RUN export uid=3000 gid=3000 && \
     mkdir -p /home/dja && \
     mkdir /src && \
-    echo "dja:x:${uid}:${gid}:Developer,,,:/home/dja:/bin/bash" >> /etc/passwd && \
+    echo "dja:LABEL maintainerName="Raphael Guzman" \
+      maintainerEmail="raphael.h.guzman@gmail.com"x:${uid}:${gid}:Developer,,,:/home/dja:/bin/bash" >> /etc/passwd && \
     echo "dja:x:${uid}:" >> /etc/group && \
     chown ${uid}:${gid} -R /home/dja && \
     chown ${uid}:${gid} -R /src
+
+# entrypoint + startup
+COPY ./entrypoint.sh /entrypoint.sh
+COPY --from=go_tmp /startup /startup
+RUN \
+  chmod +x /entrypoint.sh && \
+  chmod 4755 /startup
   
 USER dja
 ENV HOME /home/dja
@@ -61,6 +72,11 @@ RUN pip install --user pandas numpy networkx backcall
 RUN pip install --user matplotlib
 # mysql8 support
 RUN pip install --user cryptography
+# jupyter support
+RUN \
+  pip install --user jupyter && \
+  chmod -R o+rx /home/dja/.local/lib && \
+  chmod -R o+wx /home/dja/.local/share
 
 COPY ./jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
 
@@ -73,8 +89,21 @@ RUN \
   apk del build-mysql8-dependencies && \
   apk del build-jnb-dependencies
 
-USER dja
 
+#Squashed Final Image
+FROM scratch
+COPY --from=py_build / /
+RUN chmod 4755 /startup
+LABEL maintainerName="Raphael Guzman" \
+      maintainerEmail="raphael@vathes.com" \
+      maintainerCompany="DataJoint"
+USER dja
+ENV HOME /home/dja
+# ENV PYTHON_PIP_VERSION 19.1.1
+# ENV PYTHON_VERSION 3.6.8
+ENV LANG C.UTF-8
+ENV PATH "/usr/local/bin:$PATH:/home/dja/.local/bin"
+ENTRYPOINT ["/entrypoint.sh"]
 WORKDIR /src
 VOLUME /src
 VOLUME /tmp/.X11-unix
