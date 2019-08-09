@@ -5,7 +5,6 @@ services:
     #   context: .
     #   args:
     #     UBUNTU_VER: $UBUNTU_VER
-    #     PY_VER: $PY_VER
     image: datajoint/pydev:${PY_VER}-ubuntu${UBUNTU_VER}
     environment:
       - DISPLAY
