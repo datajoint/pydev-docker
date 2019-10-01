@@ -37,19 +37,19 @@ jobs:
     - <<: *alpine
       env:
       - PY_VER: 3.8-rc
-      - ALPINE_VER: 3.10
+      - ALPINE_VER: "3.10"
     - <<: *alpine
       env:
       - PY_VER: 3.7
-      - ALPINE_VER: 3.10
+      - ALPINE_VER: "3.10"
     - <<: *alpine
       env:
       - PY_VER: 3.6
-      - ALPINE_VER: 3.10
+      - ALPINE_VER: "3.10"
     - <<: *alpine
       env:
       - PY_VER: 3.5
-      - ALPINE_VER: 3.10
+      - ALPINE_VER: "3.10"
     - <<: *ubuntu
       env:
       - PY_VER: 3
