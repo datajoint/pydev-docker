@@ -6,7 +6,7 @@ alpine: &alpine
       os: linux
       language: shell
       script:
-        - docker build --build-arg PY_VER=$PY_VER --build-arg ALPINE_VER=$ALPINE_VER -t datajoint/pydev alpine/.
+        - docker build --build-arg PY_VER=$PY_VER --build-arg ALPINE_VER=$ALPINE_VER -t datajoint/pydev -f ./alpine/Dockerfile .
         - docker rmi golang:alpine${ALPINE_VER}
         - docker rmi python:${PY_VER}-alpine${ALPINE_VER}
         - docker tag datajoint/pydev:latest datajoint/pydev:${PY_VER}-alpine${ALPINE_VER}
@@ -21,7 +21,7 @@ ubuntu: &ubuntu
       os: linux
       language: shell
       script:
-        - docker build --build-arg UBUNTU_VER=$UBUNTU_VER -t datajoint/pydev ubuntu/.
+        - docker build --build-arg UBUNTU_VER=$UBUNTU_VER -t datajoint/pydev -f ./ubuntu/Dockerfile .
         - docker rmi golang:alpine3.9
         - docker rmi ubuntu:${UBUNTU_VER}
         - docker tag datajoint/pydev:latest datajoint/pydev:${PY_VER}
@@ -37,23 +37,19 @@ jobs:
     - <<: *alpine
       env:
       - PY_VER: 3.8-rc
-      - ALPINE_VER: 3.9
+      - ALPINE_VER: 3.10
     - <<: *alpine
       env:
       - PY_VER: 3.7
-      - ALPINE_VER: 3.9
+      - ALPINE_VER: 3.10
     - <<: *alpine
       env:
       - PY_VER: 3.6
-      - ALPINE_VER: 3.9
+      - ALPINE_VER: 3.10
     - <<: *alpine
       env:
       - PY_VER: 3.5
-      - ALPINE_VER: 3.9
-    - <<: *alpine
-      env:
-      - PY_VER: 3.4
-      - ALPINE_VER: 3.9
+      - ALPINE_VER: 3.10
     - <<: *ubuntu
       env:
       - PY_VER: 3

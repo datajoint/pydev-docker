@@ -2,7 +2,7 @@ ARG  UBUNTU_VER=16.04
 
 #Temp Image to create exec to allow UID/GID to be updated on boot
 FROM golang:alpine3.9 as go_tmp
-COPY ../utility/startup.go /startup.go
+COPY ./utility/startup.go /startup.go
 RUN cd / && go build startup.go
 
 #Base
@@ -39,17 +39,17 @@ RUN apt-get update &&\
 
 ENV LANG C.UTF-8
 
-ADD requirements.txt /requirements.txt
+ADD ./ubuntu/requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt \
     && rm /requirements.txt
 
 # Handle packages with improper dependency statements (i.e. pymc)
-ADD requirements_post.txt /requirements_post.txt
+ADD ./ubuntu/requirements_post.txt /requirements_post.txt
 RUN pip install -r /requirements_post.txt \
     && rm /requirements_post.txt
 
 # Initialize Jupyter Notebook config
-COPY ../config/jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
+COPY ./config/jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
 
 # datajoint admin (dja) mapped to docker host user
 RUN export uid=3000 gid=3000 && \
@@ -61,7 +61,7 @@ RUN export uid=3000 gid=3000 && \
     chown ${uid}:${gid} -R /src
 
 # entrypoint + startup
-COPY ./entrypoint.sh /entrypoint.sh
+COPY ./ubuntu/entrypoint.sh /entrypoint.sh
 COPY --from=go_tmp /startup /startup
 RUN \
   chmod +x /entrypoint.sh && \
