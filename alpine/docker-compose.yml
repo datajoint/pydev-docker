@@ -1,11 +1,12 @@
 version: '2.4'
 services:
   dj:
-    # build:
-    #   context: .
-    #   args:
-    #     ALPINE_VER: $ALPINE_VER
-    #     PY_VER: $PY_VER
+    build:
+      context: ..
+      dockerfile: ./alpine/Dockerfile
+      args:
+        ALPINE_VER: $ALPINE_VER
+        PY_VER: $PY_VER
     image: datajoint/pydev:${PY_VER}-alpine${ALPINE_VER}
     environment:
       - DISPLAY

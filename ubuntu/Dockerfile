@@ -2,7 +2,7 @@ ARG  UBUNTU_VER=16.04
 
 #Temp Image to create exec to allow UID/GID to be updated on boot
 FROM golang:alpine3.9 as go_tmp
-COPY ./startup.go /startup.go
+COPY ../utility/startup.go /startup.go
 RUN cd / && go build startup.go
 
 #Base
@@ -49,7 +49,7 @@ RUN pip install -r /requirements_post.txt \
     && rm /requirements_post.txt
 
 # Initialize Jupyter Notebook config
-COPY ./jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
+COPY ../config/jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
 
 # datajoint admin (dja) mapped to docker host user
 RUN export uid=3000 gid=3000 && \
