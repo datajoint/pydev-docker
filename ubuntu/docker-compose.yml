@@ -2,7 +2,8 @@ version: '2.4'
 services:
   dj:
     # build:
-    #   context: .
+    #   context: ..
+    #   dockerfile: ./ubuntu/Dockerfile
     #   args:
     #     UBUNTU_VER: $UBUNTU_VER
     image: datajoint/pydev:${PY_VER}-ubuntu${UBUNTU_VER}

@@ -1,0 +1,56 @@
+sudo: required
+services: 
+- docker
+alpine: &alpine
+      stage: Alpine
+      os: linux
+      language: shell
+      script:
+        - docker build --build-arg PY_VER=$PY_VER --build-arg ALPINE_VER=$ALPINE_VER -t datajoint/pydev -f ./alpine/Dockerfile .
+        - docker rmi golang:alpine${ALPINE_VER}
+        - docker rmi python:${PY_VER}-alpine${ALPINE_VER}
+        - docker tag datajoint/pydev:latest datajoint/pydev:${PY_VER}-alpine${ALPINE_VER}
+        - docker tag datajoint/pydev:latest datajoint/pydev:${PY_VER}-alpine${ALPINE_VER}-${TRAVIS_COMMIT:0:7}
+        - sh -c "[ \"$UBUNTU_VER\" = \"16.04\" ] || docker rmi datajoint/pydev:latest"
+      after_success:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker images
+        - for i in `docker images --format {{.Repository}}:{{.Tag}}`; do docker push $i; done
+ubuntu: &ubuntu
+      stage: Ubuntu
+      os: linux
+      language: shell
+      script:
+        - docker build --build-arg UBUNTU_VER=$UBUNTU_VER -t datajoint/pydev -f ./ubuntu/Dockerfile .
+        - docker rmi golang:alpine3.9
+        - docker rmi ubuntu:${UBUNTU_VER}
+        - docker tag datajoint/pydev:latest datajoint/pydev:${PY_VER}
+        - docker tag datajoint/pydev:latest datajoint/pydev:${PY_VER}-ubuntu${UBUNTU_VER}
+        - docker tag datajoint/pydev:latest datajoint/pydev:${PY_VER}-ubuntu${UBUNTU_VER}-${TRAVIS_COMMIT:0:7}
+        - sh -c "[ \"$UBUNTU_VER\" = \"16.04\" ] || docker rmi datajoint/pydev:latest"
+      after_success:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker images
+        - for i in `docker images --format {{.Repository}}:{{.Tag}}`; do docker push $i; done
+jobs:
+  include:
+    - <<: *alpine
+      env:
+      - PY_VER: 3.8-rc
+      - ALPINE_VER: "3.10"
+    - <<: *alpine
+      env:
+      - PY_VER: 3.7
+      - ALPINE_VER: "3.10"
+    - <<: *alpine
+      env:
+      - PY_VER: 3.6
+      - ALPINE_VER: "3.10"
+    - <<: *alpine
+      env:
+      - PY_VER: 3.5
+      - ALPINE_VER: "3.10"
+    - <<: *ubuntu
+      env:
+      - PY_VER: 3
+      - UBUNTU_VER: 16.04

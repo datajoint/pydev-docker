@@ -2,7 +2,8 @@ version: '2.4'
 services:
   dj:
     # build:
-    #   context: .
+    #   context: ..
+    #   dockerfile: ./alpine/Dockerfile
     #   args:
     #     ALPINE_VER: $ALPINE_VER
     #     PY_VER: $PY_VER

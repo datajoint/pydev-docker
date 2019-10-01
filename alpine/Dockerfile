@@ -3,7 +3,7 @@ ARG  ALPINE_VER=3.9
 
 #Temp Image to create exec to allow UID/GID to be updated on boot
 FROM golang:alpine${ALPINE_VER} as go_tmp
-COPY ./startup.go /startup.go
+COPY ./utility/startup.go /startup.go
 RUN cd / && go build startup.go
 
 #Base
@@ -50,7 +50,7 @@ RUN export uid=3000 gid=3000 && \
     chown ${uid}:${gid} -R /home/dja && \
     chown ${uid}:${gid} -R /src
 # entrypoint + startup
-COPY ./entrypoint.sh /entrypoint.sh
+COPY ./alpine/entrypoint.sh /entrypoint.sh
 COPY --from=go_tmp /startup /startup
 RUN \
   chmod +x /entrypoint.sh && \
@@ -70,7 +70,7 @@ RUN \
   chmod -R o+rwx /home/dja/.local/lib && \
   chmod -R o+wx /home/dja/.local/share && \
   chmod -R o+w /home/dja/.cache
-COPY ./jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
+COPY ./config/jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
 
 USER root
 # remove build dependencies
