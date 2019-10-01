@@ -1,0 +1,19 @@
+version: '2.4'
+services:
+  dj:
+    # build:
+    #   context: .
+    #   args:
+    #     ALPINE_VER: $ALPINE_VER
+    #     PY_VER: $PY_VER
+    image: datajoint/pydev:${PY_VER}-alpine${ALPINE_VER}
+    environment:
+      - DISPLAY
+      - PYTHON_USER=dja
+      - JUPYTER_PASSWORD=datajoint
+    command: jupyter notebook
+    user: 1000:1000
+    ports:
+      - "8888:8888"
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
