@@ -83,7 +83,8 @@ RUN \
 #Squashed Final Image
 FROM scratch
 COPY --from=py_build / /
-RUN chmod 4755 /startup
+ENV PYTHON_USER dja
+RUN chmod 4755 /startup && /startup 3000 3000
 LABEL maintainerName="Raphael Guzman" \
       maintainerEmail="raphael@vathes.com" \
       maintainerCompany="DataJoint"
