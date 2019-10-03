@@ -32,4 +32,7 @@ func main() {
 	os.Chown(home, uid_int, gid_int)
 	os.Chown(home + "/.local", uid_int, gid_int)
 	os.Chown(home + "/.local/bin", uid_int, gid_int)
+	os.Chown(home + "/.cache", uid_int, gid_int)
+	os.Chown(home + "/.cache/pip", uid_int, gid_int)
+	os.Chown(home + "/.cache/pip/wheels", uid_int, gid_int)
 }

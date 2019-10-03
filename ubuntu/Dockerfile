@@ -63,9 +63,11 @@ RUN export uid=3000 gid=3000 && \
 # entrypoint + startup
 COPY ./ubuntu/entrypoint.sh /entrypoint.sh
 COPY --from=go_tmp /startup /startup
+ENV PYTHON_USER dja
 RUN \
   chmod +x /entrypoint.sh && \
-  chmod 4755 /startup
+  chmod 4755 /startup && \
+  /startup 3000 3000
 
 LABEL maintainerName="Raphael Guzman" \
       maintainerEmail="raphael@vathes.com" \
