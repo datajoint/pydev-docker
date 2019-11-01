@@ -36,7 +36,7 @@ jobs:
   include:
     - <<: *alpine
       env:
-      - PY_VER: 3.8-rc
+      - PY_VER: 3.8
       - ALPINE_VER: "3.10"
     - <<: *alpine
       env:
