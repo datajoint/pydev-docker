@@ -4,8 +4,9 @@
 ## Tree
 
 ``` s
+<pre>
 ├── config --> Common configuration between all images
-│   └── jupyter_notebook_config.py --> Jupyter Notebook server config
+│   └── jupyter_notebook_config.py --> Jupyter Notebook <b>sample</b> server config
 ├── dist --> Available image distributions
 │   ├── alpine 
 |   │   ├── .env --> Uncommitted environment file
@@ -25,6 +26,7 @@
 ├── .gitignore --> Uncommited files
 ├── .travis.yml --> Travis CI testing instructions
 └── README.md --> Repo documentation
+</pre>
 ```
 
 ## Use
