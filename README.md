@@ -29,7 +29,7 @@
 
 ## Use
 
-To utilize the available containers, a `.env` and the appropriate `docker-compose.yml` is all that is needed. Specify the `.env` as follows:
+To utilize the available containers, a `.env` and the appropriate `docker-compose.yml` is all that is needed. An an example, you may specify the `.env` as follows:
 
 Alpine
 ``` s
@@ -56,7 +56,13 @@ In order to build, the entire repo is required. See the appropriate `docker-comp
 
 ## Features
 
-
+* Pre-installed DataJoint dependencies
+* Default application user `dja` aka DataJoint Admin
+* Git
+* Jupyter Notebook server
+* GUI routing to Docker host e.g. `matplotlib` figures will display on host
+* Alpine: lightweight image ideal for Production, Scaling, Unit Testing and Continuous Integation.
+* Ubuntu: Complete suite of tools for on-going Development and ad hoc Analysis. 
 
 ## Note
 
