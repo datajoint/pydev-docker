@@ -29,9 +29,45 @@
 
 ## Use
 
+To utilize the available containers, a `.env` and the appropriate `docker-compose.yml` is all that is needed. Specify the `.env` as follows:
 
+Alpine
+``` env
+ALPINE_VER=3.10
+PY_VER=3.6
+UID=1000
+GID=1000
+```
+
+Ubuntu
+``` env
+UBUNTU_VER=16.04
+PY_VER=3
+UID=1000
+GID=1000
+```
+
+You may start the container with the command `docker-compose up`.
 
 ## Building
 
+In order to build, the entire repo is required. See the appropriate `docker-compose.yml` and uncomment the build section. You may build with the command `docker-compose build`.
+
 
 ## Features
+
+
+
+## Note
+
+To chain commands during startup, one may define the `command` section in `docker-compose.yml` as follows:
+
+``` docker
+command: >
+  /bin/sh -c
+   "
+    pip install --user datajoint;
+    pip freeze | grep datajoint;
+    jupyter notebook;
+   "
+```
