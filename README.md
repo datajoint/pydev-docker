@@ -3,7 +3,7 @@
 
 ## Tree
 
-```bash
+``` s
 ├── config --> Common configuration between all images
 │   └── jupyter_notebook_config.py --> Jupyter Notebook server config
 ├── dist --> Available image distributions
