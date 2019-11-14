@@ -61,8 +61,8 @@ In order to build, the entire repo is required. See the appropriate `docker-comp
 * Git
 * Jupyter Notebook server
 * GUI routing to Docker host e.g. `matplotlib` figures will display on host
-* Alpine: lightweight image ideal for Production, Scaling, Unit Testing and Continuous Integation.
-* Ubuntu: Complete suite of tools for on-going Development and ad hoc Analysis. 
+* Alpine Image: lightweight image ideal for Production, Scaling, Unit Testing, and Continuous Integation.
+* Ubuntu Image: Complete suite of tools for on-going Development and ad hoc Analysis. 
 
 ## Note
 
