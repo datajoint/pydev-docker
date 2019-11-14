@@ -5,7 +5,7 @@
 
 ``` s
 ├── config --> Common configuration between all images
-│   └── jupyter_notebook_config.py --> Jupyter Notebook **server** config
+│   └── jupyter_notebook_config.py --> Jupyter Notebook `**`server`**` config
 ├── dist --> Available image distributions
 │   ├── alpine 
 |   │   ├── .env --> Uncommitted environment file
