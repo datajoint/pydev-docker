@@ -1,19 +1,19 @@
 version: '2.4'
 services:
   dj:
-    # build:
-    #   context: ..
-    #   dockerfile: ./ubuntu/Dockerfile
+    # build:                                    # Uncomment to enable local build
+    #   context: ../..
+    #   dockerfile: ./dist/ubuntu/Dockerfile
     #   args:
     #     UBUNTU_VER: $UBUNTU_VER
     image: datajoint/pydev:${PY_VER}-ubuntu${UBUNTU_VER}
     environment:
-      - DISPLAY
-      - PYTHON_USER=dja
-      - JUPYTER_PASSWORD=datajoint
-    command: jupyter notebook
-    user: 1000:1000
+      - DISPLAY                               # Necessary to allow GUI to route to dockerhost
+      - PYTHON_USER=dja                       # Underprivileged username
+      - JUPYTER_PASSWORD=datajoint            # Jupyter Notebook login password
+    command: jupyter notebook                 # Container command e.g. here serving ipynb
+    user: ${UID}:${GID}                       # Necessary to allow GUI to route to dockerhost
     ports:
-      - "8888:8888"
+      - "8888:8888"                           # Jupyter Notebook listening port
     volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw      # Necessary to allow GUI to route to dockerhost
