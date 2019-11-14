@@ -9,13 +9,13 @@
 ├── dist ---------------------------- Available image distributions
 │   ├── alpine 
 |   │   ├── .env -------------------- Uncommitted environment file
-|   │   ├── docker-compose.yml ------ Reference compose for build and run
+|   │   ├── docker-compose.yml ------ Reference compose for build/run
 |   │   ├── Dockerfile -------------- Image build instructions
 |   │   └── entrypoint.sh ----------- Startup script
 │   └── ubuntu
 |       ├── .dockerignore ----------- Files to disregard from build context
 |       ├── .env -------------------- Uncommitted environment file
-|       ├── docker-compose.yml ------ Reference compose for build and run
+|       ├── docker-compose.yml ------ Reference compose for build/run
 |       ├── Dockerfile -------------- Image build instructions
 |       ├── entrypoint.sh ----------- Startup script
 |       ├── requirements_post.txt --- Custom dependencies to be pre-installed
