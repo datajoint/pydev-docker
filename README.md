@@ -32,7 +32,7 @@
 To utilize the available containers, a `.env` and the appropriate `docker-compose.yml` is all that is needed. Specify the `.env` as follows:
 
 Alpine
-``` bash
+``` s
 ALPINE_VER=3.10
 PY_VER=3.6
 UID=1000
@@ -40,7 +40,7 @@ GID=1000
 ```
 
 Ubuntu
-``` bash
+``` s
 UBUNTU_VER=16.04
 PY_VER=3
 UID=1000
@@ -62,7 +62,7 @@ In order to build, the entire repo is required. See the appropriate `docker-comp
 
 To chain commands during startup, one may define the `command` section in `docker-compose.yml` as follows:
 
-``` docker-compose
+``` yaml
 command: >
   /bin/sh -c
    "
