@@ -6,7 +6,7 @@ alpine: &alpine
       os: linux
       language: shell
       script:
-        - docker build --build-arg PY_VER=$PY_VER --build-arg ALPINE_VER=$ALPINE_VER -t datajoint/pydev -f ./alpine/Dockerfile .
+        - docker build --build-arg PY_VER=$PY_VER --build-arg ALPINE_VER=$ALPINE_VER -t datajoint/pydev -f ./dist/alpine/Dockerfile .
         - docker rmi golang:alpine${ALPINE_VER}
         - docker rmi python:${PY_VER}-alpine${ALPINE_VER}
         - docker tag datajoint/pydev:latest datajoint/pydev:${PY_VER}-alpine${ALPINE_VER}
@@ -21,7 +21,7 @@ ubuntu: &ubuntu
       os: linux
       language: shell
       script:
-        - docker build --build-arg UBUNTU_VER=$UBUNTU_VER -t datajoint/pydev -f ./ubuntu/Dockerfile .
+        - docker build --build-arg UBUNTU_VER=$UBUNTU_VER -t datajoint/pydev -f ./dist/ubuntu/Dockerfile .
         - docker rmi golang:alpine3.9
         - docker rmi ubuntu:${UBUNTU_VER}
         - docker tag datajoint/pydev:latest datajoint/pydev:${PY_VER}

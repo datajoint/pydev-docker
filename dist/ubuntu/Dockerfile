@@ -39,12 +39,12 @@ RUN apt-get update &&\
 
 ENV LANG C.UTF-8
 
-ADD ./ubuntu/requirements.txt /requirements.txt
+ADD ./dist/ubuntu/requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt \
     && rm /requirements.txt
 
 # Handle packages with improper dependency statements (i.e. pymc)
-ADD ./ubuntu/requirements_post.txt /requirements_post.txt
+ADD ./dist/ubuntu/requirements_post.txt /requirements_post.txt
 RUN pip install -r /requirements_post.txt \
     && rm /requirements_post.txt
 
@@ -61,7 +61,7 @@ RUN export uid=3000 gid=3000 && \
     chown ${uid}:${gid} -R /src
 
 # entrypoint + startup
-COPY ./ubuntu/entrypoint.sh /entrypoint.sh
+COPY ./dist/ubuntu/entrypoint.sh /entrypoint.sh
 COPY --from=go_tmp /startup /startup
 ENV PYTHON_USER dja
 RUN \

@@ -50,7 +50,7 @@ RUN export uid=3000 gid=3000 && \
     chown ${uid}:${gid} -R /home/dja && \
     chown ${uid}:${gid} -R /src
 # entrypoint + startup
-COPY ./alpine/entrypoint.sh /entrypoint.sh
+COPY ./dist/alpine/entrypoint.sh /entrypoint.sh
 COPY --from=go_tmp /startup /startup
 RUN \
   chmod +x /entrypoint.sh && \
